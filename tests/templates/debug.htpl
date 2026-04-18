@@ -1,0 +1,6 @@
+<script type="application/x-cpp-head">
+#include <cmath>
+double square(double x) { return x * x; }
+</script>
+
+<div>Test</div>

@@ -1,0 +1,11 @@
+<div class="profile">
+    <h1 cpp-text="user.getName()">Default Name</h1>
+    <div cpp-if="user.isActive()">
+        <p>User is active</p>
+    </div>
+    <ul>
+        <li cpp-for="const auto& item : user.getItems()">
+            <a cpp:href="item.url" cpp-text="item.title">Link</a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,21 @@
+<div class="user-dashboard" cpp-if="user.isLoggedIn()">
+    <%
+    // 获取用户数据
+    auto userData = user.getProfile();
+    std::string theme = userData.getPreferredTheme();
+    %>
+    
+    <h1>欢迎回来，{{user.getName()}}！</h1>
+    
+    <div class="stats-container {{theme}}-theme">
+        <div class="stat-card" cpp-for="const auto& stat : user.getStats()">
+            <h3>{{stat.getTitle()}}</h3>
+            <p class="stat-value">{{stat.getValue()}}</p>
+        </div>
+    </div>
+    
+    <div class="actions">
+        <a href="/profile/{{user.getId()}}" class="btn btn-{{theme}}">编辑资料</a>
+        <button onclick="logout()" class="btn btn-secondary">退出登录</button>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title cpp-text="pageTitle">Default Title</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li cpp-for="const auto& nav : navigation">
+                    <a cpp:href="nav.url" cpp:class="nav.cssClass" cpp-text="nav.label">Nav Item</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <div cpp-if="showWelcome" class="welcome">
+            <h1>Welcome!</h1>
+            <p>Hello, <span cpp-text="user.displayName">Guest</span>!</p>
+        </div>
+        
+        <div cpp-if="!user.authenticated" class="login-form">
+            <p>Please log in to continue.</p>
+        </div>
+        
+        <section class="content">
+            <h2>Recent Posts</h2>
+            <div cpp-for="const Post& post : posts" class="post-item">
+                <h3 cpp-text="post.title">Post Title</h3>
+                <p cpp-text="post.excerpt">Post excerpt goes here...</p>
+                <a cpp:href="'/posts/' + std::to_string(post.id)">Read More</a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>Copyright 2024</p>
+    </footer>
+</body>
+</html>
