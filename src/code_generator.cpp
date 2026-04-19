@@ -120,11 +120,11 @@ std::string CodeGenerator::wrap_in_header(const std::string& body_code, const st
     result << "#include <string_view>\n";
     result << "#include <vector>\n";
     result << "#include <sys/uio.h>  // for iovec\n";
-    result << "#include \"httpserver/http_response.h\"\n";
-    result << "#include \"httpserver/http_util.h\"\n";
+    result << "#include \"fox-http/http_response.h\"\n";
+    result << "#include \"fox-http/http_util.h\"\n";
     result << "\n";
-    result << "using httpserver::HttpResponse;\n";
-    result << "using httpserver::util::stringify;\n";
+    result << "using fox::http::HttpResponse;\n";
+    result << "using fox::http::util::stringify;\n";
     result << "\n";
 
     // Add head code if any
@@ -134,8 +134,8 @@ std::string CodeGenerator::wrap_in_header(const std::string& body_code, const st
 
     result << "\n";
 
-    // Function signature. Default weave++ signature now takes HttpResponse&.
-    result << "void " << function_name << "(httpserver::HttpResponse& resp) {\n";
+    // Function signature. Default fox-page signature now takes HttpResponse&.
+    result << "void " << function_name << "(fox::http::HttpResponse& resp) {\n";
 
     // Function body
     std::istringstream body_stream(body_code);
@@ -326,11 +326,11 @@ std::string CodeGenerator::wrap_in_header_with_custom_signature(const std::strin
     result << "#include <string_view>\n";
     result << "#include <vector>\n";
     result << "#include <sys/uio.h>  // for iovec\n";
-    result << "#include \"httpserver/http_response.h\"\n";
-    result << "#include \"httpserver/http_util.h\"\n";
+    result << "#include \"fox-http/http_response.h\"\n";
+    result << "#include \"fox-http/http_util.h\"\n";
     result << "\n";
-    result << "using httpserver::HttpResponse;\n";
-    result << "using httpserver::util::stringify;\n";
+    result << "using fox::http::HttpResponse;\n";
+    result << "using fox::http::util::stringify;\n";
     result << "\n";
 
     if (!head_code.empty()) {
@@ -410,11 +410,11 @@ std::string CodeGenerator::wrap_in_header_with_injection(const std::string& body
     result << "#include <string_view>\n";
     result << "#include <vector>\n";
     result << "#include <sys/uio.h>  // for iovec\n";
-    result << "#include \"httpserver/http_response.h\"\n";
-    result << "#include \"httpserver/http_util.h\"\n";
+    result << "#include \"fox-http/http_response.h\"\n";
+    result << "#include \"fox-http/http_util.h\"\n";
     result << "\n";
-    result << "using httpserver::HttpResponse;\n";
-    result << "using httpserver::util::stringify;\n";
+    result << "using fox::http::HttpResponse;\n";
+    result << "using fox::http::util::stringify;\n";
     result << "\n";
 
     // 1. Injection head code (外部头部)

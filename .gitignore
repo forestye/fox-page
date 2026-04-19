@@ -15,7 +15,7 @@ Makefile
 *.cmake
 
 # Compiled binaries
-weave++
+fox-page
 *.exe
 *.out
 *.app
