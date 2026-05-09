@@ -52,7 +52,6 @@ install(TARGETS fox-page
 
 # Install documentation (optional)
 install(FILES
-    spec.md
     README.md
     DESTINATION share/doc/fox-page
     COMPONENT Documentation
