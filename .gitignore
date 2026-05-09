@@ -43,11 +43,6 @@ Thumbs.db
 *.pdb
 *.ilk
 
-# Test artifacts
-test_output/
-temp_test_files/
-test_legacy
-tests/unit/test_legacy
 
 # Claude Code specific
 .claude/
