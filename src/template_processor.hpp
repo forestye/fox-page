@@ -8,7 +8,7 @@
 #include <lexbor/dom/dom.h>
 #include "lexbor_wrapper.hpp"
 
-namespace weave {
+namespace fox::page {
 
 class TemplateProcessingError : public std::runtime_error {
 public:
@@ -107,4 +107,4 @@ private:
     };
 };
 
-} // namespace weave
+} // namespace fox::page

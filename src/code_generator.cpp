@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 
-namespace weave {
+namespace fox::page {
 
 std::string CodeGenerator::generate_function_body(const std::string& html_content) {
     try {
@@ -368,4 +368,4 @@ std::string CodeGenerator::wrap_in_header_with_injection(const std::string& body
     return result.str();
 }
 
-} // namespace weave
+} // namespace fox::page

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-namespace weave {
+namespace fox::page {
 
 std::string TemplateProcessor::process_node(lxb_dom_node_t* node) {
     if (!node) return "";
@@ -837,4 +837,4 @@ TemplateProcessor::InjectionBlocks TemplateProcessor::parse_injection_blocks(con
     return result;
 }
 
-} // namespace weave
+} // namespace fox::page

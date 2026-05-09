@@ -4,7 +4,7 @@
 #include "lexbor_wrapper.hpp"
 #include "template_processor.hpp"
 
-namespace weave {
+namespace fox::page {
 
 struct FunctionSignature {
     std::string return_type;
@@ -43,4 +43,4 @@ private:
     TemplateProcessor processor_;
 };
 
-} // namespace weave
+} // namespace fox::page

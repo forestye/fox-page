@@ -72,8 +72,8 @@ std::string get_output_filename(const std::string& input_path, const std::string
 
 int main(int argc, char* argv[]) {
     try {
-        weave::CliParser parser;
-        weave::CliOptions options = parser.parse(argc, argv);
+        fox::page::CliParser parser;
+        fox::page::CliOptions options = parser.parse(argc, argv);
         
         if (options.show_help) {
             parser.print_help();
@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        weave::CodeGenerator generator;
+        fox::page::CodeGenerator generator;
 
         for (const std::string& input_file : options.input_files) {
             try {

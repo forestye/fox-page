@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace weave {
+namespace fox::page {
 
 struct CliOptions {
     std::vector<std::string> input_files;
@@ -25,4 +25,4 @@ private:
     std::string program_name_;
 };
 
-} // namespace weave
+} // namespace fox::page

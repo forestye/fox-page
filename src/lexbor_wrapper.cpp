@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <cstring>
 
-namespace weave {
+namespace fox::page {
 
 LexborDocument::LexborDocument(const std::string& html) {
     lxb_html_document_t* doc = lxb_html_document_create();
@@ -63,4 +63,4 @@ lxb_dom_node_t* LexborDocument::document_element() const {
     return lxb_dom_interface_node(html_element);
 }
 
-} // namespace weave
+} // namespace fox::page

@@ -4,7 +4,7 @@
 #include <string>
 #include <lexbor/html/html.h>
 
-namespace weave {
+namespace fox::page {
 
 class LexborDocument {
 public:
@@ -33,4 +33,4 @@ private:
     std::unique_ptr<lxb_html_document_t, DocumentDeleter> doc_;
 };
 
-} // namespace weave
+} // namespace fox::page

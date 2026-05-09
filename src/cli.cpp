@@ -2,7 +2,7 @@
 #include <iostream>
 #include <filesystem>
 
-namespace weave {
+namespace fox::page {
 
 CliOptions CliParser::parse(int argc, char* argv[]) {
     CliOptions options;
@@ -37,7 +37,7 @@ CliOptions CliParser::parse(int argc, char* argv[]) {
 
 void CliParser::print_help() const {
     std::cout << "Usage: " << program_name_ << " [options] <input_file> [more_files...]\n\n";
-    std::cout << "Weave++ - HTML template to C++ transpiler\n\n";
+    std::cout << "fox-page - HTML template to C++ transpiler\n\n";
     std::cout << "Options:\n";
     std::cout << "  -h, --help      Show this help message\n";
     std::cout << "  -v, --version   Show version information\n";
@@ -54,8 +54,8 @@ void CliParser::print_help() const {
 }
 
 void CliParser::print_version() const {
-    std::cout << "Weave++ version 1.0.0\n";
+    std::cout << "fox-page version 1.0.0\n";
     std::cout << "HTML template to C++ transpiler\n";
 }
 
-} // namespace weave
+} // namespace fox::page
