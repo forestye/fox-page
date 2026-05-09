@@ -5,7 +5,6 @@ obj/
 
 # Generated output files
 output/
-*.hpp
 
 # CMake generated files
 CMakeCache.txt
