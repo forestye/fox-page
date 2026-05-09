@@ -70,23 +70,6 @@ std::string get_output_filename(const std::string& input_path, const std::string
     }
 }
 
-std::string get_function_name(const std::string& input_path) {
-    fs::path input(input_path);
-    std::string basename = input.stem().string();
-    
-    // Convert filename to valid C++ function name
-    std::string func_name = "render_" + basename;
-    
-    // Replace non-alphanumeric characters with underscore
-    for (char& c : func_name) {
-        if (!std::isalnum(c)) {
-            c = '_';
-        }
-    }
-    
-    return func_name;
-}
-
 int main(int argc, char* argv[]) {
     try {
         weave::CliParser parser;

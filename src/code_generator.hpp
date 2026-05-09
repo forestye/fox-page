@@ -20,20 +20,11 @@ struct InjectionContent {
 
 class CodeGenerator {
 public:
-    // 主要生成方法 - 现在仅使用向量化I/O
-    std::string generate_header(const std::string& html_content, const std::string& function_name = "render_template");
-
-    // 新方法：使用自定义函数签名生成代码
-    std::string generate_header_with_signature(const std::string& html_content, const std::string& function_signature, const std::string& input_file_path);
-
-    // 新方法：支持注入文件的代码生成
+    // 生成 .cpp 文件：向量化 I/O 函数体 + 自定义签名 + 可选 --extra 注入
     std::string generate_header_with_injection(const std::string& html_content, const std::string& function_signature, const std::string& input_file_path, const std::string& injection_file_path);
 
 private:
-    // 向量化I/O生成方法（现在是唯一方法）
     std::string generate_function_body(const std::string& html_content);
-    std::string wrap_in_header(const std::string& body_code, const std::string& head_code, const std::string& function_name);
-    std::string wrap_in_header_with_custom_signature(const std::string& body_code, const std::string& head_code, const std::string& function_declaration);
     std::string generate_vectorized_code(const std::vector<OutputSegment>& segments);
 
     // 工具方法

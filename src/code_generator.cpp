@@ -5,17 +5,6 @@
 
 namespace weave {
 
-std::string CodeGenerator::generate_header(const std::string& html_content, const std::string& function_name) {
-    try {
-        processor_.reset(); // Clear any previous state
-        std::string body_code = generate_function_body(html_content);
-        std::string head_code = processor_.get_head_code();
-        return wrap_in_header(body_code, head_code, function_name);
-    } catch (const std::exception& e) {
-        return "// Error: " + std::string(e.what()) + "\n";
-    }
-}
-
 std::string CodeGenerator::generate_function_body(const std::string& html_content) {
     try {
         // In vectorized mode, we don't need preprocessing
@@ -111,45 +100,6 @@ std::string CodeGenerator::generate_vectorized_code(const std::vector<OutputSegm
     return result.str();
 }
 
-std::string CodeGenerator::wrap_in_header(const std::string& body_code, const std::string& head_code, const std::string& function_name) {
-    std::ostringstream result;
-
-    // Includes
-    result << "#include <iostream>\n";
-    result << "#include <string>\n";
-    result << "#include <string_view>\n";
-    result << "#include <vector>\n";
-    result << "#include <sys/uio.h>  // for iovec\n";
-    result << "#include \"fox-http/http_response.h\"\n";
-    result << "#include \"fox-http/http_util.h\"\n";
-    result << "\n";
-    result << "using fox::http::HttpResponse;\n";
-    result << "using fox::http::util::stringify;\n";
-    result << "\n";
-
-    // Add head code if any
-    if (!head_code.empty()) {
-        result << head_code << "\n";
-    }
-
-    result << "\n";
-
-    // Function signature. Default fox-page signature now takes HttpResponse&.
-    result << "void " << function_name << "(fox::http::HttpResponse& resp) {\n";
-
-    // Function body
-    std::istringstream body_stream(body_code);
-    std::string line;
-    while (std::getline(body_stream, line)) {
-        result << line << "\n";
-    }
-
-    result << "}\n";
-
-    return result.str();
-}
-
-// Helper method for escaping strings (reuse existing logic)
 std::string CodeGenerator::escape_string(const std::string& str) {
     std::ostringstream result;
     for (char c : str) {
@@ -202,29 +152,6 @@ std::vector<OutputSegment> CodeGenerator::merge_consecutive_static_strings(const
     }
 
     return merged;
-}
-
-std::string CodeGenerator::generate_header_with_signature(const std::string& html_content, const std::string& function_signature, const std::string& input_file_path) {
-    try {
-        processor_.reset(); // Clear any previous state
-        std::string body_code = generate_function_body(html_content);
-        std::string head_code = processor_.get_head_code();
-
-        // Parse function signature and handle __func__ replacement
-        FunctionSignature sig = parse_function_signature(function_signature);
-
-        // Replace __func__ with actual function name if needed
-        if (sig.function_name == "__func__") {
-            sig.function_name = generate_function_name_from_path(input_file_path);
-        }
-
-        // Create complete function declaration
-        std::string function_declaration = sig.return_type + " " + sig.function_name + "(" + sig.parameters + ")";
-
-        return wrap_in_header_with_custom_signature(body_code, head_code, function_declaration);
-    } catch (const std::exception& e) {
-        return "// Error: " + std::string(e.what()) + "\n";
-    }
 }
 
 FunctionSignature CodeGenerator::parse_function_signature(const std::string& signature) {
@@ -316,33 +243,6 @@ std::string CodeGenerator::sanitize_identifier(const std::string& input) {
     }
 
     return result.empty() ? "_unnamed" : result;
-}
-
-std::string CodeGenerator::wrap_in_header_with_custom_signature(const std::string& body_code, const std::string& head_code, const std::string& function_declaration) {
-    std::ostringstream result;
-
-    result << "#include <iostream>\n";
-    result << "#include <string>\n";
-    result << "#include <string_view>\n";
-    result << "#include <vector>\n";
-    result << "#include <sys/uio.h>  // for iovec\n";
-    result << "#include \"fox-http/http_response.h\"\n";
-    result << "#include \"fox-http/http_util.h\"\n";
-    result << "\n";
-    result << "using fox::http::HttpResponse;\n";
-    result << "using fox::http::util::stringify;\n";
-    result << "\n";
-
-    if (!head_code.empty()) {
-        result << head_code;
-    }
-
-    result << "\n";
-    result << function_declaration << " {\n";
-    result << body_code;
-    result << "}\n";
-
-    return result.str();
 }
 
 std::string CodeGenerator::generate_header_with_injection(const std::string& html_content, const std::string& function_signature, const std::string& input_file_path, const std::string& injection_file_path) {
