@@ -16,11 +16,19 @@ example/
 
 ## Prerequisites
 
-- **fox-page** built at `../build/fox-page` (run `cmake -S .. -B ../build &&
-  cmake --build ../build` from this directory once), or available on PATH,
-  or pass `-DFOX_PAGE=/path/to/fox-page`.
-- **fox-http** source at `../../fox-http` (a sibling clone), or pass
-  `-DFOX_HTTP_DIR=/path/to/fox-http`.
+The example assumes the same sibling-repo layout that
+[`fox-http-example`](https://github.com/forestye/fox-http-example) uses:
+
+```
+<your-code-root>/
+├── fox-http/             # cloned next to fox-page
+└── fox-page/
+    ├── build/            # fox-page binary built here
+    └── example/          # this directory
+```
+
+- Clone fox-http as a sibling of fox-page.
+- Build fox-page once: `cmake -S .. -B ../build && cmake --build ../build`.
 
 ## Build & run
 
