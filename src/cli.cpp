@@ -42,7 +42,7 @@ void CliParser::print_help() const {
     std::cout << "  -h, --help      Show this help message\n";
     std::cout << "  -v, --version   Show version information\n";
     std::cout << "  -o <path>       Output file or directory (default: current directory)\n";
-    std::cout << "  --func <signature>  Function signature (default: \"void __func__(Response& resp)\")\n";
+    std::cout << "  --func <signature>  Function signature (default: \"void __func__(HttpResponse& resp)\")\n";
     std::cout << "  --extra <file>  Inject additional C++ code from file\n\n";
     std::cout << "Examples:\n";
     std::cout << "  " << program_name_ << " template.html                    # Output to ./template.cpp\n";
