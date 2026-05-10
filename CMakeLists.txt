@@ -57,3 +57,10 @@ install(FILES
     COMPONENT Documentation
     OPTIONAL
 )
+
+option(FOX_PAGE_BUILD_TESTS
+    "Build fox-page smoke/integration tests (requires fox-http installed)" OFF)
+if(FOX_PAGE_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
