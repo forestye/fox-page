@@ -16,19 +16,22 @@ example/
 
 ## Prerequisites
 
-The example assumes the same sibling-repo layout that
-[`fox-http-example`](https://github.com/forestye/fox-http-example) uses:
+This example doubles as a starter template — copy the directory into your
+own project, swap in your template, and adjust `--func`. The CMakeLists is
+written for the production setup: fox-http is consumed via `find_package`,
+fox-page via `find_program`.
 
-```
-<your-code-root>/
-├── fox-http/             # cloned next to fox-page
-└── fox-page/
-    ├── build/            # fox-page binary built here
-    └── example/          # this directory
-```
-
-- Clone fox-http as a sibling of fox-page.
-- Build fox-page once: `cmake -S .. -B ../build && cmake --build ../build`.
+- **fox-http** installed system-wide. From a fox-http checkout:
+  ```bash
+  cmake -S . -B build -DCMAKE_INSTALL_PREFIX=/usr/local
+  cmake --build build -j && sudo cmake --install build
+  ```
+  After that, `find_package(fox-http REQUIRED)` resolves automatically.
+- **fox-page** binary at `../build/fox-page` (build it from the fox-page
+  repo root: `cmake -S . -B build && cmake --build build -j`). When you
+  copy this directory into a different project, replace the
+  `HINTS ../build` in `find_program` with wherever you keep the fox-page
+  binary, or install fox-page somewhere on `PATH`.
 
 ## Build & run
 

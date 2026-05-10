@@ -4,12 +4,8 @@ project(fox-page-example LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# ─── fox-http (sibling project at ../../fox-http) ────────────────────
-if(NOT TARGET fox-http::fox-http)
-    set(FOX_HTTP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../fox-http
-                     ${CMAKE_BINARY_DIR}/fox-http_build)
-endif()
+# ─── fox-http (installed via cmake --install) ────────────────────────
+find_package(fox-http REQUIRED)
 
 # ─── fox-page binary (in-tree, parent's build dir) ───────────────────
 find_program(FOX_PAGE NAMES fox-page
