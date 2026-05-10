@@ -85,6 +85,6 @@ int main(int argc, char* argv[]) {
 
     HttpServer server(port);
     server.set_handler(&router);
-    std::cout << "fox-page demo listening on http://127.0.0.1:" << port << "\n";
+    std::cout << "fox-page demo listening on http://0.0.0.0:" << port << "\n";
     return server.run();
 }

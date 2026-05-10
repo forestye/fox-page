@@ -46,9 +46,9 @@ Then visit:
 
 | URL | What you'll see |
 |---|---|
-| <http://127.0.0.1:8080/>            | `Hello, world!` + feature list |
-| <http://127.0.0.1:8080/hello/fox>   | Same page with `Hello, fox!` |
-| <http://127.0.0.1:8080/hello/yelin> | Same page with `Hello, yelin!` |
+| <http://0.0.0.0:8080/>            | `Hello, world!` + feature list |
+| <http://0.0.0.0:8080/hello/fox>   | Same page with `Hello, fox!` |
+| <http://0.0.0.0:8080/hello/yelin> | Same page with `Hello, yelin!` |
 
 Pass a different port as the first argument:
 
