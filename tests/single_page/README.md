@@ -23,6 +23,13 @@ single_page/
 - `cpp-if` directive (renders the body when the condition holds)
 - `<script type="application/x-cpp-head">` block injecting `#include`s
 - `--func` with a multi-arg signature including STL types
+- **SSO regression**: the feature list deliberately has 10 entries with
+  short (≤15-byte) titles. The cpp-for body pushes ≥17 dynamic strings,
+  enough to force any container that grows-by-reallocation (e.g. an old
+  `std::vector` with `reserve(16)`) to move SSO strings to a new buffer
+  and leave the matching iov pointers dangling. `run.sh` asserts every
+  short title appears verbatim, catching this regression if it ever
+  comes back.
 
 ## Prerequisites
 

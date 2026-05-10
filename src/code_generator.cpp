@@ -50,9 +50,14 @@ std::string CodeGenerator::generate_vectorized_code(const std::vector<OutputSegm
     std::vector<OutputSegment> merged_segments = merge_consecutive_static_strings(segments);
 
     // Initialize containers
+    // Use std::deque, not std::vector: push_back must not invalidate
+    // pointers to existing elements. Vector reallocation moves SSO
+    // strings (≤15 bytes) — data lives inside the std::string control
+    // block — leaving earlier iov entries dangling and the response
+    // body corrupted. Deque guarantees reference/pointer stability on
+    // push_back at either end ([deque.modifiers]).
     result << "    // 动态字符串容器，保持生命周期到函数结束\n";
-    result << "    std::vector<std::string> dynamic_strings;\n";
-    result << "    dynamic_strings.reserve(16);\n";
+    result << "    std::deque<std::string> dynamic_strings;\n";
     result << "\n";
     result << "    // 动态构建 iovec 数组\n";
     result << "    std::vector<iovec> iov_list;\n";
@@ -309,6 +314,7 @@ std::string CodeGenerator::wrap_in_header_with_injection(const std::string& body
     result << "#include <string>\n";
     result << "#include <string_view>\n";
     result << "#include <vector>\n";
+    result << "#include <deque>\n";
     result << "#include <sys/uio.h>  // for iovec\n";
     result << "#include \"fox-http/http_response.h\"\n";
     result << "#include \"fox-http/http_util.h\"\n";

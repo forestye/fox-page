@@ -56,15 +56,26 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    // Ten entries with intentionally short titles (≤15 bytes → SSO).
+    // The cpp-for body pushes two strings per iteration, so 10 features
+    // means 20 dynamic strings + name + timestamp = 22 pushes. Any
+    // codegen that grows the dynamic-strings container with reallocation
+    // (e.g. an old `std::vector` with reserve(16)) will move the SSO
+    // titles, leaving stale iov pointers and corrupted output. The
+    // notes are deliberately long (>15 bytes) so they live on the
+    // heap and are unaffected by container reallocation — that
+    // contrast is the diagnostic.
     const std::vector<Feature> features = {
-        {"{{expr}} interpolation",
-         "values inlined into the iov chain through stringify()"},
-        {"cpp-for",
-         "the same fragment is rendered per element; loop body produced once at compile time"},
-        {"cpp-if",
-         "conditional render with no allocation when the branch is empty"},
-        {"writev zero-copy",
-         "static fragments live in .rodata; dynamic ones live on the handler stack"},
+        {"text",   "cpp-text: replace inner text with an expression"},
+        {"if",     "cpp-if: conditional render"},
+        {"for",    "cpp-for: loop render — the directive this test exercises"},
+        {"attr",   "cpp:<name>: dynamic attribute value"},
+        {"head",   "x-cpp-head: file-top includes / typedefs"},
+        {"source", "x-cpp-source: locals at the top of the generated function"},
+        {"tail",   "x-cpp-tail: cleanup right before the function returns"},
+        {"interp", "{{expr}}: expression interpolation in text or attributes"},
+        {"writev", "iovec scatter-gather: single syscall, zero-copy send"},
+        {"sso",    "regression coverage for small-string optimization (titles ≤15B)"},
     };
 
     HttpRouter router;

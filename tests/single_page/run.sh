@@ -46,7 +46,26 @@ check() {
 
 check "/"                    "/"                    "Hello, world!"
 check "/hello/:name"         "/hello/fox"           "Hello, fox!"
-check "cpp-for renders item" "/"                    "writev zero-copy"
 check "/static/pico.min.css" "/static/pico.min.css" "Pico CSS"
+
+# Regression: cpp-for + SSO (≤15-byte) dynamic strings.
+# Pre-fix codegen used a std::vector<std::string> with reserve(16);
+# crossing that capacity reallocated the vector and moved every SSO
+# string to a new address, leaving the matching iov entry pointing at
+# freed memory. We render 10 short titles (>16 push_backs total), so
+# the bug, if reintroduced, surfaces as missing/garbled <strong>…</strong>
+# fragments here.
+expected_titles=(text if for attr head source tail interp writev sso)
+response=$(curl -sS "$URL/" 2>/dev/null) || response=""
+missing=()
+for t in "${expected_titles[@]}"; do
+    grep -qF "<strong>$t</strong>" <<< "$response" || missing+=("$t")
+done
+if (( ${#missing[@]} == 0 )); then
+    echo "PASS [cpp-for SSO titles] all 10 short titles rendered"
+else
+    echo "FAIL [cpp-for SSO titles] missing: ${missing[*]}"
+    fail=1
+fi
 
 exit $fail
